@@ -15,7 +15,7 @@
     </div>
     <form>
         <input type="text" placeholder="Movie title">
-        <input type="number" name="ratings" placeholder="ratings">
+        <input type="number" name="ratings" placeholder="ratings" min="0" max="10">
         <button type="submit">Submit</button>
     </form>
 
@@ -23,16 +23,17 @@
         <button class="carousel__button carousel__button--left hide"><i class="fas fa-arrow-left"></i></button>
 
         <div class="carousel__track-container">
-            <ul class="carousel__track">    
+            <ul class="carousel__track">
                 <li class="carousel__slide current-slide">
+
                     <div class="card">
                         <h2>Sumbit the form to make a carousel</h2>
-                        <p>4.5</p>
-                        <button class="carousel__slide-card-remove">
+                        <button class="carousel__slide-card-remove hide">
                             Remove
                         </button>
                     </div>
-                </li>   
+
+                </li>
             </ul>
         </div>
 
@@ -44,6 +45,9 @@
             <!-- <button class="carousel__indicator"></button> -->
             <!-- <button class="carousel__indicator"></button> -->
         </div>
+    </div>
+
+
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
