@@ -22,6 +22,10 @@ const makeCards = (title, rating) => (
     </div>`
 );
 
+const makeRatings = numStars => {
+    return `<span><i class="fas fa-star"></i></span>`.repeat(numStars)
+}
+
 const makeRemoveButton = () => {
     return `<button class="carousel__slide-card-remove">Remove</button>`
 }
@@ -42,7 +46,6 @@ const moveToSlide = (track, currentSlide, targetSlide) => {
 }
 
 const updateDots = (currentDot, targetDot) => {
-    // if (!currentDot || !targetDot) return;
     $(currentDot).removeClass("current-slide");
     $(targetDot).addClass("current-slide");
 }
@@ -66,24 +69,34 @@ const showAndHideArrows = (targetIndex, prevButton, nextButton) => {
     }
 }
 
+const inputIsValid = (title, ratings) => {
+    if(title.trim().length < 2 || !Number.isFinite(ratings) || ratings > 10 || ratings < 0) return false;
+    return true;
+}
 
 $("form").on("submit", function(e) {
     e.preventDefault();
     const movieTitle = $(`input[type="text"]`).val();
-    const ratings = $(`input[type="number"]`).val();
-
-    console.log("[formSubmit] slidesWidth is:",slidesWidth)
-
+    const ratings = +$(`input[type="number"]`).val();
+    if(!inputIsValid(movieTitle, ratings)) {
+        alert("Invalid inputs passed, check your data")
+        throw new Error("Invalid movie title or ratings passed")
+    }
     const newSlide = $(makeCarouselSlides());    
     const card = $(makeCards(movieTitle, ratings));
+    const stars = $(makeRatings(ratings))
     const removeButton = $(makeRemoveButton());
-    $(card).append($(removeButton));
+    $(card).append($(stars)).append($(removeButton));
 
     const slideWithCard = $(newSlide).append(card);
     const dot = $(makeCarouselIndicators());
 
-    $(".carousel__track").append(slideWithCard)
-    $(".carousel__nav").append(dot)
+    $(".carousel__track").fadeIn(350, function() {
+        $(this).append(slideWithCard)
+    })
+    $(".carousel__nav").fadeIn(350, function() {
+        $(this).append(dot)
+    })
 
     slides.push($(slideWithCard).get(0))
     dots.push($(dot).get(0));
@@ -94,23 +107,36 @@ $("form").on("submit", function(e) {
     
     $(".carousel__button--right").removeClass("hide")
     $("input").val("")
+    $(".carousel__slide-card-remove").fadeIn(350, function(e) {
+        $(this).removeClass("hide")
+    })
+})
+
+$(".carousel").on("click", "button.carousel__slide-card-remove", function(e) {
+    if(!slides.length) return;
+    const currentSlide = slides.find(slide => $(slide).hasClass("current-slide"));
+    const previousSlide = $(currentSlide).prev().get(0);
+    const previousSlideIndex = slides.findIndex(slide => slide === previousSlide);
+    const currentDot = dots.find(dot => $(dot).hasClass("current-slide"));
+    const prevDot = $(currentDot).prev().get(0);
+
+    // Update the UI, first move to all the previous ones
+    moveToSlide(track, currentSlide, previousSlide)
+    updateDots(currentDot, prevDot);
+    showAndHideArrows(previousSlideIndex, prevButton, nextButton)    
+
+    // remove currentSlide
+    $(currentSlide).remove();
+    // remove the dot on the nav
+    $(currentDot).remove();
 })
 
 $(prevButton).on("click", function (e) {
     const currentSlide = slides.find(slide => $(slide).hasClass("current-slide"));
-    console.log("currentSlide is: ",currentSlide)
-
     const previousSlide = $(currentSlide).prev().get(0)
-    console.log("previousSlide is:",previousSlide)
-
     const previousSlideIndex = slides.findIndex(slide => slide === previousSlide);
-    console.log("previousSlideIndex is: ",previousSlideIndex)
-
     const currentDot = dots.find(dot => $(dot).hasClass("current-slide"));
-    console.log("currentDot is: ",currentDot)
-    
     const targetDot = $(currentDot).prev().get(0);
-    console.log("targetDot is: ",targetDot)
 
     moveToSlide(track, currentSlide, previousSlide)
     updateDots(currentDot, targetDot)
@@ -118,21 +144,13 @@ $(prevButton).on("click", function (e) {
 })
 
 $(nextButton).on("click", function (e) {
-    const currentSlide = slides.find(slide => $(slide).hasClass("current-slide"));
-    console.log("currentSlide is: ",currentSlide)
-    
+    const currentSlide = slides.find(slide => $(slide).hasClass("current-slide"));    
     const nextSlide = $(currentSlide).next().get(0);
-    console.log("nextSlide is:",nextSlide)
     console.log("nextSlide's far apart by: ", $(nextSlide).css("left"))
 
     const targetIndex = slides.findIndex(slide => slide === nextSlide);
-    console.log("targetIndex is: ",targetIndex)
-    
     const currentDot = dots.find(dot => $(dot).hasClass("current-slide"));
-    console.log("currentDot is :",currentDot)
-
     const targetDot = $(currentDot).next().get(0);
-    console.log("targetDot is: ",targetDot)
 
     moveToSlide(track, currentSlide, nextSlide);
     updateDots(currentDot, targetDot);
