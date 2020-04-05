@@ -28,6 +28,7 @@ form input {
     padding : 5px;
     font-size: 1.2rem;
     text-align: center;
+    width : 20%;
 }
 
 form input:focus {
@@ -71,30 +72,35 @@ button:hover {
     transition : transform 200ms ease-in;
 }
 
-.card {
+.card:not(span) {
     width : 100%;
     height : 100%;
     background-color: black;
     position : relative;
     object-fit: cover;
-    display : flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .card h2 {
     margin : 1rem auto;
     font-size: 2rem;
 }
-
-.card p {
-    margin : 0 auto;
-    font-size: 1.5rem;
+.card div {
+    flex-basis: 100%;
+    width : 0%;
 }
+
+.card span {
+    color : yellow;
+    font-size: 2rem;
+    float: left;
+}
+
 .carousel__slide {
     position : absolute;
-    top : 0;
-    bottom : 0;
     width : 100%;
     height : 100%;
 }
