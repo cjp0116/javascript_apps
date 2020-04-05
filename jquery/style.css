@@ -1,99 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 body {
-    background-color : black;
+    background-color: black;
     color : red;
 }
 
-div {
-    display : flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.header {
+    text-align: center;
+    padding : 1rem;
+    letter-spacing: 2px;
     width : 80%;
-    margin : .5rem auto
-}
-
-div i {
-    display : inline;
+    margin : 0 auto;
 }
 
 form {
-    display: flex;
+    display : flex;
     justify-content: center;
     align-items: center;
 }
 
-input {
-    border : 1px solid cornflowerblue;
-    border-radius: 8px;
+form input {
+    border : 1px solid black;
     outline: none;
-    padding-top: .5rem;
-    text-align: center;
+    padding : 5px;
     font-size: 1.2rem;
+    text-align: center;
 }
 
-button {
-    box-sizing: border-box;
-    border : 0;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    padding-top: .5rem;
-    font-size: 1.2rem;
+form input:focus {
+    border : 1px solid cornflowerblue;
+}
+
+form button {
+    border : 1px solid black;
+    padding : 5px;
+    font-size : 1.2rem;
+    outline : none;
+    background-color: orangered;
+    color : white;
+    cursor : pointer;
 }
 
 button:hover {
     background-color: black;
     color : red;
-    cursor : pointer;
 }
 
-#results {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-
-
-/************************ Carousel Stylings ***********************************/
+/*********************** Carousel STYLES *************** */
 .carousel {
-    display : block;
     position: relative;
     height : 600px;
     width : 80%;
     margin : 0 auto;
 }
 
-.caoursel__image {
-    width : 100%;
-    height : 100%;
-    position : relative;
-    object-fit: cover;
-    display: flex;
-}
-
-
 .carousel__track-container {
     height : 100%;
-    position: relative;
+    width : 100%;
+    position : relative;
     overflow: hidden;
 }
 
 .carousel__track {
+    list-style: none;
     padding : 0;
     margin : 0;
-    list-style: none;
-    transition : transform 250ms ease-in;
+    transition : transform 200ms ease-in;
 }
 
+.card {
+    width : 100%;
+    height : 100%;
+    background-color: black;
+    position : relative;
+    object-fit: cover;
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card h2 {
+    margin : 1rem auto;
+    font-size: 2rem;
+}
+
+.card p {
+    margin : 0 auto;
+    font-size: 1.5rem;
+}
 .carousel__slide {
     position : absolute;
     top : 0;
@@ -105,10 +102,11 @@ button:hover {
 .carousel__button {
     position : absolute;
     top : 50%;
-    transform: translateY(-50%);
-    border : 0;
-    background : transparent;
+    transform : translateY(-50%);
+    background: transparent;
     color : white;
+    border : 0;
+    cursor : pointer;
     outline : none;
 }
 
@@ -120,12 +118,17 @@ button:hover {
     right : -40px;
 }
 
+.carousel__button i {
+    width : 1.4rem;
+    font-size: 20px;
+}
+
 .carousel__nav {
-    display : flex;
-    flex-direction: row;
+    display: flex;
     justify-content: center;
-    background : red;
     padding : 10px 0;
+    background : red;
+    overflow-x: hidden;
 }
 
 .carousel__indicator {
@@ -133,16 +136,28 @@ button:hover {
     border-radius: 50%;
     width : 15px;
     height : 15px;
-    background : rgab(0, 0, 0, 0.3);
-    margin : 0 12px;
+    background: rgba(0, 0, 0, 0.3);
+    margin : 0 .8rem;
+    cursor : pointer;
 }
 
-
+.carousel__slide-card-remove {
+    border : 1px solid black;
+    padding : 5px;
+    margin : 0 auto;
+    outline: none;
+    background: orangered;
+    color : white;
+    margin-top: 1rem;
+    border-radius: 6px;
+    cursor : pointer; 
+    font-size: 1.2rem;
+} 
 
 .carousel__indicator.current-slide {
-    background : rgba(0, 0, 0, .75);
+    background : rgba(0, 0, 0, 0.75);
 }
 
-.is-hidden {
+.hide {
     display : none;
 }
